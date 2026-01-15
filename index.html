@@ -3,109 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>לב שלם - תזונה לאי ספיקת לב</title>
+    <title>לב שלם - מתכונים לאי ספיקת לב</title>
     <style>
         :root {
             --main-red: #e74c3c;
             --dark-red: #c0392b;
-            --light-bg: #f9fbfc;
-            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --light-bg: #f4f7f6;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background-color: var(--light-bg);
-            margin: 0; padding: 0; color: #333; line-height: 1.6;
+            margin: 0; padding: 0; color: #333;
         }
         header {
             background: linear-gradient(135deg, var(--main-red), var(--dark-red));
-            color: white; padding: 40px 20px; text-align: center; box-shadow: var(--shadow);
+            color: white; padding: 40px 20px; text-align: center;
         }
         .intro-section {
             max-width: 800px; margin: 30px auto; padding: 25px;
-            background: white; border-radius: 15px; text-align: center; box-shadow: var(--shadow);
+            background: white; border-radius: 15px; text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         .category-tabs {
-            display: flex; justify-content: center; gap: 10px; margin: 25px 0; flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 10px; margin: 25px 0;
         }
         .tab-btn {
-            padding: 12px 25px; font-size: 1.1em; cursor: pointer; border: none;
-            background: #eee; border-radius: 30px; transition: 0.3s; font-weight: bold;
+            padding: 12px 25px; cursor: pointer; border: none;
+            background: #ddd; border-radius: 30px; font-weight: bold;
         }
         .tab-btn.active { background: var(--main-red); color: white; }
+        
         .recipe-grid {
-            display: none; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            display: none; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px; max-width: 1200px; margin: 0 auto 50px auto; padding: 0 20px;
         }
         .recipe-grid.active { display: grid; }
+
+        /* כרטיס מתכון */
         .recipe-card {
-            background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;
+            transition: transform 0.2s;
         }
+        .recipe-card:hover { transform: translateY(-5px); }
         .recipe-card img { width: 100%; height: 180px; object-fit: cover; }
-        .recipe-content { padding: 15px; }
-        .recipe-title { color: var(--main-red); margin: 0 0 8px 0; font-size: 1.2em; }
-        .ingredients-list { font-size: 0.85em; background: #fff5f4; padding: 10px; border-radius: 8px; }
-        footer { background: #2c3e50; color: white; text-align: center; padding: 20px; margin-top: 50px; }
+        .recipe-card h3 { padding: 15px; margin: 0; text-align: center; color: var(--dark-red); }
+
+        /* חלון קופץ (Modal) */
+        .modal {
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7); overflow-y: auto;
+        }
+        .modal-content {
+            background-color: white; margin: 5% auto; padding: 30px;
+            width: 80%; max-width: 700px; border-radius: 15px; position: relative;
+        }
+        .close-btn {
+            position: absolute; left: 20px; top: 15px;
+            font-size: 30px; cursor: pointer; color: #888;
+        }
+        .recipe-details h2 { color: var(--main-red); border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .recipe-details h4 { color: #555; margin-bottom: 5px; }
+        .recipe-details p, .recipe-details ul { margin-bottom: 20px; }
+        
+        footer { background: #2c3e50; color: white; text-align: center; padding: 20px; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>לב שלם ❤️</h1>
-    <p>מתכונים דלי נתרן לבריאות הלב</p>
+    <p>תזונה נכונה מצילה חיים</p>
 </header>
 
 <div class="intro-section">
-    <h2>על הפרויקט</h2>
     <p>אנחנו תלמידי מגמת רפואה, וכחלק מעבודת הגמר הקמנו את האתר במטרה לסייע למטופלים עם אי ספיקת לב לנהל אורח חיים בריא וטעים תוך שמירה על הגבלת נתרן ונוזלים. כאן תמצאו מתכונים מותאמים, דלי מלח ועשירים בטעם, שיעזרו לכם לשמור על הלב דרך המטבח.</p>
-    
     <div class="category-tabs">
-        <button class="tab-btn active" onclick="showCategory('breakfast', this)">🍳 ארוחת בוקר</button>
-        <button class="tab-btn" onclick="showCategory('lunch', this)">🍲 ארוחת צהריים</button>
-        <button class="tab-btn" onclick="showCategory('dinner', this)">🥗 ארוחת ערב</button>
+        <button class="tab-btn active" onclick="showCategory('breakfast', this)">בוקר</button>
+        <button class="tab-btn" onclick="showCategory('lunch', this)">צהריים</button>
+        <button class="tab-btn" onclick="showCategory('dinner', this)">ערב</button>
     </div>
 </div>
 
 <div id="breakfast" class="recipe-grid active">
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1517673132405-a56a62b18acc?w=400"><div class="recipe-content"><h3 class="recipe-title">1. דייסת קוואקר ופירות</h3><div class="ingredients-list">קוואקר, מים/חלב דל שומן, קינמון, פירות יער.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400"><div class="recipe-content"><h3 class="recipe-title">2. יוגורט עם אגוזים</h3><div class="ingredients-list">יוגורט טבעי, אגוזי מלך, זרעי צ'יה, חצי תפוח.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1525811902-f2342621330e?w=400"><div class="recipe-content"><h3 class="recipe-title">3. שקשוקה ירוקה</h3><div class="ingredients-list">ביצה, תרד טרי, שום, בצל, פלפל שחור.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=400"><div class="recipe-content"><h3 class="recipe-title">4. טוסט אבוקדו</h3><div class="ingredients-list">לחם מלא (דל נתרן), חצי אבוקדו, לימון, צנונית.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1494597564530-811f0a97ac3d?w=400"><div class="recipe-content"><h3 class="recipe-title">5. שייק חלבון ירוק</h3><div class="ingredients-list">בננה, מלפפון, תרד, כוס מים, כף שקדיה.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1506084868730-170b1e3b99df?w=400"><div class="recipe-content"><h3 class="recipe-title">6. פודינג צ'יה וקוקוס</h3><div class="ingredients-list">זרעי צ'יה, חלב קוקוס ללא סוכר, תמצית וניל.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400"><div class="recipe-content"><h3 class="recipe-title">7. חביתת חומוס טבעונית</h3><div class="ingredients-list">קמח חומוס, מים, בצל ירוק, פטרוזיליה, כורכום.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1511690078046-78d10b80df3f?w=400"><div class="recipe-content"><h3 class="recipe-title">8. סלט פירות קיצי</h3><div class="ingredients-list">מלון, ענבים, תפוז, נענע טרייה.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1504387432042-8aca549e4829?w=400"><div class="recipe-content"><h3 class="recipe-title">9. מאפינס גבינה ביתי</h3><div class="ingredients-list">גבינה לבנה 3%, ביצה, קמח מלא, ללא תוספת מלח.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400"><div class="recipe-content"><h3 class="recipe-title">10. פנקייק שיבולת שועל</h3><div class="ingredients-list">בננה מעוכה, ביצה, חצי כוס קוואקר טחון.</div></div></div>
-</div>
+    <div class="recipe-card" onclick="openRecipe('דייסת קוואקר ופירות יער', 'חצי כוס שיבולת שועל, 1 כוס מים, חופן פירות יער, קמצוץ קינמון.', '1. מרתיחים מים. 2. מוסיפים קוואקר ומבשלים 5 דקות. 3. מפזרים פירות וקינמון.', 'הגישו בקערה שקופה עם מעט אגוזי מלך מעל למראה יוקרתי.')">
+        <img src="https://images.unsplash.com/photo-1517673132405-a56a62b18acc?w=400">
+        <h3>דייסת קוואקר ופירות יער</h3>
+    </div>
+    <div class="recipe-card" onclick="openRecipe('סלט בוקר ים-תיכוני', '2 מלפפונים, 1 עגבניה, חצי בצל סגול, מיץ מלימון שלם, כף שמן זית.', 'קוצצים דק את הירקות, מערבבים עם הלימון ושמן הזית ללא תוספת מלח.', 'סדרו את הירקות בשורות לפי צבעים והוסיפו עלי נענע טריים.')">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400">
+        <h3>סלט בוקר רענן</h3>
+    </div>
+    </div>
 
 <div id="lunch" class="recipe-grid">
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400"><div class="recipe-content"><h3 class="recipe-title">1. סלמון בתנור</h3><div class="ingredients-list">פילה סלמון, שום, גרידת לימון, טימין.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400"><div class="recipe-content"><h3 class="recipe-title">2. חזה עוף בגריל</h3><div class="ingredients-list">חזה עוף, פפריקה, כמון, שמן זית.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400"><div class="recipe-content"><h3 class="recipe-title">3. קציצות עדשים</h3><div class="ingredients-list">עדשים חומות, בצל, סילאן טבעי, פטרוזיליה.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1473093226795-af9932fe5856?w=400"><div class="recipe-content"><h3 class="recipe-title">4. פסטה עגבניות טריות</h3><div class="ingredients-list">פסטה מלאה, עגבניות שרי, בזיליקום, שום.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?w=400"><div class="recipe-content"><h3 class="recipe-title">5. תבשיל במיה</h3><div class="ingredients-list">במיה טרייה, רסק עגבניות (ללא מלח), בצל.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=400"><div class="recipe-content"><h3 class="recipe-title">6. עוף עם בטטה</h3><div class="ingredients-list">שוקי עוף, קוביות בטטה, רוזמרין, פלפל שחור.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1515516969-d4008cc6241a?w=400"><div class="recipe-content"><h3 class="recipe-title">7. דג אמנון בלימון</h3><div class="ingredients-list">דג אמנון, הרבה מיץ לימון, שום, פלפל חריף.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"><div class="recipe-content"><h3 class="recipe-title">8. קינואה עם ירקות</h3><div class="ingredients-list">קינואה מבושלת, זוקיני, גזר, פלפל אדום.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400"><div class="recipe-content"><h3 class="recipe-title">9. ממולאים דלי נתרן</h3><div class="ingredients-list">פלפל, אורז מלא, עשבי תיבול, בהרט.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400"><div class="recipe-content"><h3 class="recipe-title">10. קדירת טופו וירקות</h3><div class="ingredients-list">טופו, ברוקולי, כרובית, קצת ג'ינג'ר.</div></div></div>
+    <div class="recipe-card" onclick="openRecipe('פילה סלמון בלימון', '200 גרם סלמון, חצי לימון, שן שום, ענף טימין.', '1. מחממים תנור ל-180 מעלות. 2. מניחים את הדג על נייר אפייה. 3. סוחטים לימון ואופים 15 דקות.', 'הגישו על מצע של פירה בטטה כתום.')">
+        <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400">
+        <h3>פילה סלמון בתנור</h3>
+    </div>
 </div>
 
 <div id="dinner" class="recipe-grid">
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"><div class="recipe-content"><h3 class="recipe-title">1. סלט בטטה קלויה</h3><div class="ingredients-list">חסה, בטטה אפויה, חומוס מבושל, טחינה.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1547592115-316315201832?w=400"><div class="recipe-content"><h3 class="recipe-title">2. מרק כתומים</h3><div class="ingredients-list">דלעת, גזר, עדשים כתומות, בצל.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=400"><div class="recipe-content"><h3 class="recipe-title">3. טורטייה כוסמין</h3><div class="ingredients-list">טורטייה, אבוקדו, פלפלים קלויים, נבטים.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400"><div class="recipe-content"><h3 class="recipe-title">4. לביבות קישואים</h3><div class="ingredients-list">קישוא מגורד, ביצה, פירורי לחם מלא, שמיר.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400"><div class="recipe-content"><h3 class="recipe-title">5. סלט טונה וירקות</h3><div class="ingredients-list">טונה במים, מלפפון, תירס (ללא מלח), עגבנייה.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400"><div class="recipe-content"><h3 class="recipe-title">6. מאפה כרובית</h3><div class="ingredients-list">פרחי כרובית, טחינה גולמית, פפריקה מעושנת.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400"><div class="recipe-content"><h3 class="recipe-title">7. סלט ניסואז ללא מלח</h3><div class="ingredients-list">ביצה קשה, שעועית ירוקה, תפוח אדמה, חסה.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1547592115-316315201832?w=400"><div class="recipe-content"><h3 class="recipe-title">8. מרק עדשים סמיך</h3><div class="ingredients-list">עדשים ירוקות, סלרי, גזר, כמון.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1464306311696-03a444557790?w=400"><div class="recipe-content"><h3 class="recipe-title">9. תבשיל פטריות</h3><div class="ingredients-list">פטריות טריות, בצל ירוק, מעט טימין.</div></div></div>
-    <div class="recipe-card"><img src="https://images.unsplash.com/photo-1511690078046-78d10b80df3f?w=400"><div class="recipe-content"><h3 class="recipe-title">10. פריטטה ירקות</h3><div class="ingredients-list">2 ביצים, ברוקולי, בצל, פלפל צהוב.</div></div></div>
+    <div class="recipe-card" onclick="openRecipe('מרק כתומים סמיך', 'בטטה, גזר, דלעת, בצל, כפית כמון.', 'מבשלים את כל הירקות במים עד לריכוך וטוחנים בבלנדר ידני.', 'הגישו עם זילוף של טחינה גולמית מלמעלה בצורת ספירלה.')">
+        <img src="https://images.unsplash.com/photo-1547592115-316315201832?w=400">
+        <h3>מרק כתומים עשיר</h3>
+    </div>
+</div>
+
+<div id="recipeModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div id="modalBody" class="recipe-details">
+            </div>
+    </div>
 </div>
 
 <footer>
-    <p>פרויקט גמר במדעי הרפואה | מוגש באהבה לקהילה</p>
+    <p>מוגש ע"י תלמידי מגמת רפואה | כל הזכויות שמורות לבריאות הלב שלכם ❤️</p>
 </footer>
 
 <script>
@@ -114,6 +129,35 @@
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(catId).classList.add('active');
         btn.classList.add('active');
+    }
+
+    function openRecipe(title, ingredients, steps, plating) {
+        const modal = document.getElementById('recipeModal');
+        const body = document.getElementById('modalBody');
+        
+        body.innerHTML = `
+            <h2>${title}</h2>
+            <h4>🥗 מרכיבים וכמויות:</h4>
+            <p>${ingredients}</p>
+            <h4>👨‍🍳 אופן ההכנה:</h4>
+            <p>${steps}</p>
+            <h4>✨ המלצת צילחות:</h4>
+            <p><i>${plating}</i></p>
+        `;
+        
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('recipeModal').style.display = "none";
+    }
+
+    // סגירת המודל בלחיצה מחוץ לחלון
+    window.onclick = function(event) {
+        const modal = document.getElementById('recipeModal');
+        if (event.target == modal) {
+            closeModal();
+        }
     }
 </script>
 
