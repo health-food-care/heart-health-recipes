@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>לב שלם - תזונה נכונה לאי ספיקת לב</title>
+    <style>
+        :root {
+            --main-red: #e74c3c;
+            --dark-red: #c0392b;
+            --light-bg: #f9fbfc;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--main-red), var(--dark-red));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .intro-section {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        /* עיצוב הקטגוריות */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border: none;
+            background: #ddd;
+            border-radius: 30px;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .tab-btn.active {
+            background: var(--main-red);
+            color: white;
+        }
+
+        .recipe-grid {
+            display: none; /* מוסתר כברירת מחדל */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+        }
+
+        .recipe-grid.active {
+            display: grid;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .recipe-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .recipe-content {
+            padding: 15px;
+        }
+
+        .recipe-title {
+            color: var(--main-red);
+            margin: 0 0 10px 0;
+            font-size: 1.3em;
+        }
+
+        .ingredients-list {
+            font-size: 0.9em;
+            background: #fff5f4;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: var(--main-red);
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>לב שלם ❤️</h1>
+    <p>תזונה בריאה ודלת נתרן לאיכות חיים</p>
+</header>
+
+<div class="intro-section">
+    <h2>שלום לכם</h2>
+    <p>אנחנו תלמידי מגמת רפואה, וכחלק מעבודת הגמר הקמנו את האתר במטרה לסייע למטופלים עם אי ספיקת לב לנהל אורח חיים בריא וטעים תוך שמירה על הגבלת נתרן ונוזלים.</p>
+    <p><strong>בחרו קטגוריה כדי לצפות במתכונים:</strong></p>
+    
+    <div class="category-tabs">
+        <button class="tab-btn" onclick="showCategory('breakfast')">ארוחות בוקר</button>
+        <button class="tab-btn" onclick="showCategory('lunch')">ארוחות צהריים</button>
+        <button class="tab-btn" onclick="showCategory('dinner')">ארוחות ערב</button>
+    </div>
+</div>
+
+<div id="breakfast" class="recipe-grid">
+    <div class="recipe-card">
+        <img src="https://via.placeholder.com/300x200?text=Oatmeal" alt="דייסת קוואקר">
+        <div class="recipe-content">
+            <h3 class="recipe-title">דייסת קוואקר ופירות יער</h3>
+            <p>משביעה, דלת נתרן ועשירה בסיבים.</p>
+            <div class="ingredients-list">
+                <strong>מרכיבים:</strong> חצי כוס שיבולת שועל, כוס מים/חלב דל שומן, חופן אוכמניות, קינמון.
+            </div>
+        </div>
+    </div>
+    <div class="recipe-card">
+        <img src="https://via.placeholder.com/300x200?text=Shakshuka" alt="שקשוקה">
+        <div class="recipe-content">
+            <h3 class="recipe-title">שקשוקה ירוקה דלת מלח</h3>
+            <p>שימוש בעשבי תיבול במקום מלח.</p>
+        </div>
+    </div>
+    </div>
+
+<div id="lunch" class="recipe-grid">
+    <div class="recipe-card">
+        <img src="https://via.placeholder.com/300x200?text=Salmon" alt="סלמון">
+        <div class="recipe-content">
+            <h3 class="recipe-title">פילה סלמון בלימון ועשבי תיבול</h3>
+            <p>מנה עשירה באומגה 3 עם אפס תוספת מלח.</p>
+            <div class="ingredients-list">
+                <strong>מרכיבים:</strong> סלמון טרי, שום כתוש, גרידת לימון, טימין, שמן זית.
+            </div>
+        </div>
+    </div>
+    </div>
+
+<div id="dinner" class="recipe-grid">
+    <div class="recipe-card">
+        <img src="https://via.placeholder.com/300x200?text=Salad" alt="סלט">
+        <div class="recipe-content">
+            <h3 class="recipe-title">סלט בטטה קלויה ועדשים</h3>
+            <p>מנה משביעה וקלה לעיכול.</p>
+        </div>
+    </div>
+    </div>
+
+<div class="contact-form">
+    <h3>צור קשר - שאל אותנו שאלה</h3>
+    <form>
+        <input type="text" placeholder="שם מלא" required>
+        <input type="email" placeholder="אימייל" required>
+        <textarea rows="4" placeholder="איך נוכל לעזור?" required></textarea>
+        <button type="submit">שלח הודעה</button>
+    </form>
+</div>
+
+<footer>
+    <p>פרויקט גמר במדעי הרפואה 2024 | מוגש כשירות לקהילה</p>
+</footer>
+
+<script>
+    function showCategory(catId) {
+        // הסרת מחלקת active מכל הגרידים
+        document.querySelectorAll('.recipe-grid').forEach(grid => {
+            grid.classList.remove('active');
+        });
+        // הסרת מחלקת active מכל הכפתורים
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // הצגת הקטגוריה שנבחרה
+        document.getElementById(catId).classList.add('active');
+        // סימון הכפתור כפעיל
+        event.currentTarget.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
